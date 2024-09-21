@@ -1,0 +1,22 @@
+---
+# K3s Configuration
+k3s_version: "v1.30.4+k3s1"
+k3s_install_mode: "standalone"  # Options: "standalone" or "ha"
+
+# Component versions
+helm_version: "v3.12.0"
+ingress_nginx_version: "4.7.1"
+argocd_version: "5.36.1"
+dashboard_version: "6.0.8"
+cert_manager_version: "v1.12.0"
+
+# Component toggles
+install_helm: false  #  If true, Helm will be installed
+install_ingress_nginx: false # If true, Ingress Nginx will be installed
+install_argocd: false # If true, ArgoCD will be installed
+install_dashboard: false # If true, Kubernetes Dashboard will be installed
+install_cert_manager: false # If true, Cert Manager will be installed
+
+# Additional configurations
+argocd_ingress_host: "argocd.example.com"
+dashboard_ingress_host: "dashboard.example.com"

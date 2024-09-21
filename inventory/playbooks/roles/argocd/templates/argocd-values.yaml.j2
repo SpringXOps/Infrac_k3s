@@ -1,0 +1,13 @@
+# File: roles/argocd/templates/argocd-values.yaml.j2
+server:
+  ingress:
+    enabled: true
+    hosts:
+      - {{ argocd_ingress_host }}
+    ingressClassName: nginx
+  extraArgs:
+    - --insecure
+dex:
+  enabled: false
+notifications:
+  enabled: false
