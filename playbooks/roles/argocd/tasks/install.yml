@@ -16,3 +16,8 @@
     --version {{ argocd_version }}
     --namespace argocd --create-namespace
     -f /tmp/argocd-values.yaml
+    --kubeconfig /etc/rancher/k3s/k3s.yaml
+  become: yes
+- name: Set KUBECONFIG environment variable
+  ansible.builtin.set_fact:
+    ansible_environment: "{{ ansible_environment | combine({'KUBECONFIG': '/etc/rancher/k3s/k3s.yaml'}) }}"  

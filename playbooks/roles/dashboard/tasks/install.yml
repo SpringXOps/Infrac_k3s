@@ -16,3 +16,7 @@
     --version {{ dashboard_version }}
     --namespace kubernetes-dashboard --create-namespace
     -f /tmp/dashboard-values.yaml
+    --kubeconfig /etc/rancher/k3s/k3s.yaml
+  become: yes
+  environment:
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml

@@ -16,3 +16,7 @@
     --version {{ cert_manager_version }}
     --namespace cert-manager --create-namespace
     -f /tmp/cert-manager-values.yaml
+    --kubeconfig /etc/rancher/k3s/k3s.yaml
+  become: yes
+  environment:
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
