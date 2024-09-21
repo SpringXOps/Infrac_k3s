@@ -1,13 +1,26 @@
+# ---
+# - name: Install K3s standalone
+#   include_tasks: install_standalone.yml
+#   when: 
+#     - k3s_install_mode == "standalone"
+
+# - name: Install K3s HA
+#   include_tasks: install_ha.yml
+#   when: 
+#     - k3s_install_mode == "ha"
+
+# - include_tasks: uninstall.yml
+#   when: ansible_play_name == "uninstall"
 ---
-- name: Install K3s standalone
-  include_tasks: install_standalone.yml
+- include_tasks: install_standalone.yml
   when: 
     - k3s_install_mode == "standalone"
+    - k3s_action == "install"
 
-- name: Install K3s HA
-  include_tasks: install_ha.yml
+- include_tasks: install_ha.yml
   when: 
     - k3s_install_mode == "ha"
+    - k3s_action == "install"
 
 - include_tasks: uninstall.yml
-  when: ansible_play_name == "uninstall"
+  when: k3s_action == "uninstall"
