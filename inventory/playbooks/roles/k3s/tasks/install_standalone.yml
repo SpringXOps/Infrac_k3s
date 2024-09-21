@@ -3,6 +3,12 @@
   shell: |
     curl -sfL https://get.k3s.io | sh -s - \
     --write-kubeconfig-mode 644 \
-    --tls-san {{ ansible_host }}
+    --tls-san {{ ansible_host }} \
+    --disable traefik
   args:
     creates: /usr/local/bin/k3s
+
+- name: Wait for K3s to be ready
+  wait_for:
+    path: /etc/rancher/k3s/k3s.yaml
+    state: present
