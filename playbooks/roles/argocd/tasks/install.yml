@@ -41,20 +41,4 @@
   command: kubectl wait --for=condition=available --timeout=600s deployment/argocd-server -n argocd
   become: yes
 
-- name: Get ArgoCD admin password
-  command: kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
-  register: argocd_admin_password
-  become: yes
 
-- name: Display ArgoCD admin password
-  debug:
-    msg: "ArgoCD admin password: {{ argocd_admin_password.stdout }}"
-
-- name: Check ArgoCD Ingress
-  command: kubectl get ingress -n argocd
-  register: argocd_ingress
-  become: yes
-
-- name: Display ArgoCD Ingress
-  debug:
-    var: argocd_ingress.stdout_lines
