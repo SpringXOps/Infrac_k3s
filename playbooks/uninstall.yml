@@ -7,7 +7,6 @@
     - { role: ingress_nginx, tasks_from: uninstall, when: install_ingress_nginx | bool }
     - { role: helm, tasks_from: uninstall, when: install_helm | bool }
 
----
 - hosts: localhost
   connection: local
   become: yes
