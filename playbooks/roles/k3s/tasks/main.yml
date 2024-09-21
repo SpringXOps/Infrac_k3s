@@ -10,4 +10,4 @@
     - k3s_install_mode == "ha"
 
 - include_tasks: uninstall.yml
-  when: k3s_uninstall == "uninstall"
+  when: ansible_play_name == "uninstall"
