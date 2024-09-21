@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  connection: local
+  become: yes
+  vars:
+    k3s_install_mode: standalone
+  roles:
+    - k3s

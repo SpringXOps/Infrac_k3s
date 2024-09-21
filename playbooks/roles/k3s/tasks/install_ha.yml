@@ -1,3 +1,4 @@
+---
 - name: Generate K3s config file
   template:
     src: k3s_config.ini.j2

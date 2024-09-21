@@ -1,21 +1,19 @@
+---
 - name: Install K3s
   shell: |
-    curl -sfL https://get.k3s.io | sh -s - \
-    --write-kubeconfig-mode 644 \
-    --tls-san {{ ansible_host }}
+    curl -sfL https://get.k3s.io | sh -
   args:
     creates: /usr/local/bin/k3s
-  register: k3s_install_result
 
-- name: Display K3s installation result
+- name: Wait for K3s to be ready
+  wait_for:
+    path: /etc/rancher/k3s/k3s.yaml
+    state: present
+
+- name: Get nodes
+  command: k3s kubectl get nodes
+  register: nodes_output
+
+- name: Display nodes
   debug:
-    var: k3s_install_result
-
-- name: Check K3s binary
-  stat:
-    path: /usr/local/bin/k3s
-  register: k3s_binary
-
-- name: Display K3s binary status
-  debug:
-    var: k3s_binary
+    var: nodes_output.stdout_lines
