@@ -1,6 +1,6 @@
-- name: Set KUBECONFIG environment variable
-  ansible.builtin.set_fact:
-    ansible_environment: "{{ ansible_environment | combine({'KUBECONFIG': '/etc/rancher/k3s/k3s.yaml'}) }}"
+# - name: Set KUBECONFIG environment variable
+#   ansible.builtin.set_fact:
+#     ansible_environment: "{{ ansible_environment | combine({'KUBECONFIG': '/etc/rancher/k3s/k3s.yaml'}) }}"
 
 - name: Add ArgoCD repository
   command: helm repo add argo https://argoproj.github.io/argo-helm
@@ -33,8 +33,10 @@
     --namespace argocd
     -f /tmp/argocd-values.yaml
     --timeout 10m
+    --kubeconfig /etc/rancher/k3s/k3s.yaml    
   become: yes
-
+  environment:
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
 - name: Wait for ArgoCD to be ready
   command: kubectl wait --for=condition=available --timeout=600s deployment/argocd-server -n argocd
   become: yes
