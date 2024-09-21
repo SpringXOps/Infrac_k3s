@@ -5,9 +5,24 @@ server:
     hosts:
       - {{ argocd_ingress_host }}
     ingressClassName: nginx
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
   extraArgs:
     - --insecure
+  service:
+    type: ClusterIP
+
 dex:
   enabled: false
+
 notifications:
   enabled: false
+
+configs:
+  params:
+    server.insecure: true
+
+redis:
+  enabled: true
