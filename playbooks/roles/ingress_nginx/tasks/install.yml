@@ -16,3 +16,6 @@
     --version {{ ingress_nginx_version }}
     --namespace ingress-nginx --create-namespace
     -f /tmp/ingress-values.yaml
+    --kubeconfig /etc/rancher/k3s/k3s.yaml
+  become: yes
+
