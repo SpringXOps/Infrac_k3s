@@ -1,6 +1,4 @@
 ---
-# File: roles/cert_manager/tasks/main.yml
-
 - name: Add Jetstack Helm repository
   command: helm repo add jetstack https://charts.jetstack.io
   become: yes
@@ -27,7 +25,11 @@
   command: kubectl wait --for=condition=available --timeout=300s deployment/cert-manager -n cert-manager
   become: yes
 
+- name: Template ClusterIssuer
+  template:
+    src: cluster-issuer.yaml.j2
+    dest: /tmp/cluster-issuer.yaml
+
 - name: Apply ClusterIssuer
-  kubernetes:
-    definition: "{{ lookup('template', 'cluster-issuer.yaml.j2') | from_yaml }}"
+  command: kubectl apply -f /tmp/cluster-issuer.yaml
   become: yes
