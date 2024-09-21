@@ -8,9 +8,8 @@
     - { role: helm, tasks_from: uninstall, when: install_helm | bool }
 
 - hosts: localhost
-  connection: local
   become: yes
   vars:
-    k3s_action: uninstall
+    ansible_play_name: "uninstall"
   roles:
     - k3s
