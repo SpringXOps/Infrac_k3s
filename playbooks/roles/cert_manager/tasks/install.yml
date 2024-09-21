@@ -1,9 +1,13 @@
 ---
-- name: Add Jetstack repository
+# File: roles/cert_manager/tasks/main.yml
+
+- name: Add Jetstack Helm repository
   command: helm repo add jetstack https://charts.jetstack.io
+  become: yes
 
 - name: Update Helm repositories
   command: helm repo update
+  become: yes
 
 - name: Template cert-manager values
   template:
@@ -16,7 +20,14 @@
     --version {{ cert_manager_version }}
     --namespace cert-manager --create-namespace
     -f /tmp/cert-manager-values.yaml
-    --kubeconfig /etc/rancher/k3s/k3s.yaml
+    --set installCRDs=true
   become: yes
-  environment:
-    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+
+- name: Wait for cert-manager to be ready
+  command: kubectl wait --for=condition=available --timeout=300s deployment/cert-manager -n cert-manager
+  become: yes
+
+- name: Apply ClusterIssuer
+  kubernetes:
+    definition: "{{ lookup('template', 'cluster-issuer.yaml.j2') | from_yaml }}"
+  become: yes
