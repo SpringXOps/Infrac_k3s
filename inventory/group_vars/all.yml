@@ -1,6 +1,9 @@
 ---
+---
 k3s_version: "v1.30.4+k3s1"
-k3s_install_mode: "standalone"  # Options: "standalone" or "ha"
+k3s_install_mode: "standalone"
+#k3s_version: "v1.30.4+k3s1"
+#k3s_install_mode: "standalone"  # Options: "standalone" or "ha"
 
 # Component versions
 helm_version: "v3.12.0"
